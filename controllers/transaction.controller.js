@@ -43,21 +43,39 @@ module.exports = {
 
     updateOne: (req, res) => {
         Transaction
-            .findByIdAndUpdate(
-                {_id: req.params.id},
-                {$set: req.body}
-            )
-            .then((response) => {
-                return res.status(200).json({
-                    message: "Transaction Data Updated!",
-                    response
-                })
+            .findById(req.params.id)
+            .then((trans) => {
+                if(trans) {
+                    req.body.due_date = trans.due_date
+                    Transaction
+                        .update(
+                            {_id: req.params.id},
+                            {$set: req.body}
+                        )
+                        .then((data) => res.send(trans))
+                } else {reject()}
             })
             .catch((err) => {
                 return res.status(500).json({
-                    message: err
+                    message: 'Transaction not exist'
                 })
             })
+        // Transaction
+        //     .findByIdAndUpdate(
+        //         {_id: req.params.id},
+        //         {$set: req.body}
+        //     )
+        //     .then((response) => {
+        //         return res.status(200).json({
+        //             message: "Transaction Data Updated!",
+        //             response
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         return res.status(500).json({
+        //             message: err
+        //         })
+        //     })
     },
 
     deleteOne: (req, res) => {
