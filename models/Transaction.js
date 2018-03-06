@@ -26,7 +26,7 @@ module.exports = mongoose.model('Transaction', schema({
     .pre("update", function() {
         console.log('=====>',this._update.$set)
         this._update.$set.in_date = new Date();
-        let diffDays = this._update.$set.in_date.getTime() - this._update.$set.due_date.getTime();
+        let diffDays = this._update.$set.in_date.getDate() - this._update.$set.due_date.getDate();
         console.log(Math.abs(diffDays))
         if(diffDays<0) {
             this._update.$set.fine = Math.abs(diffDays)*1000
