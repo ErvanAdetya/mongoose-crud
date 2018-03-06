@@ -3,14 +3,11 @@ const Transaction = require('../models/Transaction');
 
 module.exports = {
     create: (req,res) => {
-        const {member, days, out_date, due_date, in_date, fine, booklist} = req.body
+        const {member, days, out_date, booklist} = req.body;
         const newTransaction = new Transaction({
             member: member || '5a9e6edb3320151b49e960b0',
             days: days || 3,
             out_date: out_date,
-            due_date: due_date,
-            in_date: in_date,
-            fine: fine || 2000,
             booklist: booklist || []
         });
         newTransaction
